@@ -20,7 +20,7 @@ def msvr(x, y, ker, C, epsi, par, tol):
     n_k = np.shape(y)[1]   #output data dimensionality (output variables)
     
     #build the kernel matrix on the labeled samples
-    H = kernelmatrix(ker, x.T, x.T, par)
+    H = kernelmatrix(ker, x, x, par)
     
     #create martix for regression parameters
     Beta = np.zeros((n_m, n_k))
@@ -28,7 +28,7 @@ def msvr(x, y, ker, C, epsi, par, tol):
     #E = prediction error per output (n_m * n_k)
     E = y - np.dot(H, Beta)
     #RSE
-    u = np.sqrt(np.sum(E**2,1)).reshape(n_m,1)
+    u = np.sqrt(np.sum(E**2,1,keepdims=True))
     
     #RMSE
     RMSE = []
@@ -66,7 +66,7 @@ def msvr(x, y, ker, C, epsi, par, tol):
         u_a = u.copy()
         i1_a = i1.copy()
         
-        M1 = H[i1][:,i1] + np.diagflat(1/a[i1]) + 1e-10 * np.eye(len(a[i1])) 
+        M1 = H[i1][:,i1] + np.diagflat(1/a[i1]) + 1e-10 * np.eye(len(a[i1]))
         
         #compute betas
 #         sal1 = np.dot(np.linalg.pinv(M1),y[i1])  #求逆or广义逆（M-P逆）无法保证M1一定是可逆的？
@@ -167,6 +167,10 @@ Output:
 '''
 
 def kernelmatrix(ker, X, X2, parameter):
+
+    X = X.T
+    X2 = X2.T
+
     if(ker == 'lin'):
         tmp1, XX2_norm, tmp2 = np.linalg.svd(np.dot(X.T,X2))
         XX2_norm = np.max(XX2_norm)
@@ -178,7 +182,7 @@ def kernelmatrix(ker, X, X2, parameter):
         K = (np.dot(X.T,X2)/XX2_norm + 1) * parameter
     
     elif(ker == 'rbf'):
-        n1sq = np.sum(X**2,0).reshape(1, -1)
+        n1sq = np.sum(X**2,0,keepdims=True)
         n1 = X.shape[1]
         
         if(n1 == 1):        #just one feature
@@ -188,7 +192,7 @@ def kernelmatrix(ker, X, X2, parameter):
             for i in range(0,N1):
                 D[i] = (X2 - np.dot(np.ones((N2,1)),X[i].reshape(1,-1))).T * (X2 - np.dot(np.ones((N2,1)),X[i].reshape(1,-1))).T
         else:
-            n2sq = np.sum(X2**2,0).reshape(1, -1)
+            n2sq = np.sum(X2**2,0,keepdims=True)
             n2 = X2.shape[1]
             D = (np.dot(np.ones((n2,1)),n1sq)).T + np.dot(np.ones((n1,1)),n2sq) - 2*np.dot(X.T, X2)
         
