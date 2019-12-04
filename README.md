@@ -1,2 +1,2 @@
 # multiple-support-vector-machine
-MSVR (Multiple Support Vector Machine)
+Multiple Support Vector Machine (MSVR)
