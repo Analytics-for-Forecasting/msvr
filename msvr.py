@@ -178,7 +178,7 @@ def kernelmatrix(ker, X, X2, parameter):
         K = (np.dot(X.T,X2)/XX2_norm + 1) * parameter
     
     elif(ker == 'rbf'):
-        n1sq = np.sum(X**2,0)
+        n1sq = np.sum(X**2,0).reshape(1, -1)
         n1 = X.shape[1]
         
         if(n1 == 1):        #just one feature
@@ -186,11 +186,11 @@ def kernelmatrix(ker, X, X2, parameter):
             N2 = X2.shape[0]
             D = np.zeros((N1,N2))
             for i in range(0,N1):
-                D[i] = (X2 - np.dot(np.ones((N2,1)),X[i])).T * (X2 - np.dot(np.ones((N2,1)),X[i])).T        
+                D[i] = (X2 - np.dot(np.ones((N2,1)),X[i].reshape(1,-1))).T * (X2 - np.dot(np.ones((N2,1)),X[i].reshape(1,-1))).T
         else:
-            n2sq = np.sum(X2**2,0)
+            n2sq = np.sum(X2**2,0).reshape(1, -1)
             n2 = X2.shape[1]
-            D = (np.dot(np.ones((n2,1)),n1sq)).T + np.dot(np.ones((n1,1)),n2sq) - 2*np.dot(X.T, X2)    #如何计算推导
+            D = (np.dot(np.ones((n2,1)),n1sq)).T + np.dot(np.ones((n1,1)),n2sq) - 2*np.dot(X.T, X2)
         
         K = np.exp((-D**2)/(2*parameter**2))
         
