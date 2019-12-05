@@ -31,14 +31,17 @@ Ytest = y[600:, :]
 Xtrain = (Xtrain-np.min(Xtrain))/(np.max(Xtrain)-np.min(Xtrain))
 Ytrain = (Ytrain-np.min(Ytrain))/(np.max(Ytrain)-np.min(Ytrain))
 
-# Parameters
-# ker: kernel ('lin', 'poly', 'rbf'),
-# C: cost parameter,
-# par (kernel):
-#	- lin: no parameters,
-# - poly: [gamma, b, degree],
-# - rbf: sigma (width of the RBF kernel),
-# tol: tolerance.
+'''
+Parameters
+	ker: kernel ('lin', 'poly', 'rbf'),
+	C: cost parameter,
+	par (kernel):
+		-lin: no parameters,
+		-poly: [gamma, b, degree],
+		-rbf: sigma (width of the RBF kernel),
+tol: tolerance.
+'''
+
 ker     = 'rbf'
 C       = 2
 epsi = 0.001
