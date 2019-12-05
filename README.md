@@ -65,3 +65,5 @@ poly: $K(X_i, X_j)=(\gamma X_i^TX_j+b)^d$
 
 rbf: $K(X_i, X_j)=exp(-\frac {||X_i^T-X_j||^2}{2\sigma^2} )$
 
+ 
+
