@@ -4,14 +4,14 @@ import numpy as np
 
 '''
 Inputs:
-    x : training patterns (n_m * n_d),
-    y : training targets (n_m * n_k),
+    x : training patterns (num_samples * n_d),
+    y : training targets (num_samples * n_k),
     ker : kernel type ('lin', 'poly', 'rbf'),
     C : cost parameter,
     par : kernel parameter (see function 'kernelmatrix'),
     tol : tolerance.
 Outputs:
-    Beta, NSV,H,i1
+    Beta
 '''
 
 def msvr(x, y, ker, C, epsi, par, tol):
@@ -45,7 +45,6 @@ def msvr(x, y, ker, C, epsi, par, tol):
     L = np.zeros(u.shape)
     
     # we modify only entries for which  u > epsi. with the sq slack
-    #L(i) = (RSE(i) - epsi).^2
     L[i1] = u[i1]**2 - 2 * epsi * u[i1] + epsi**2
     
     #Lp is the quantity to minimize (sq norm of parameters + slacks)    
@@ -56,7 +55,7 @@ def msvr(x, y, ker, C, epsi, par, tol):
     Lp.append(Lp_0)
     
     eta = 1
-    k = 1                #计数器+loss function数组索引，python:index从0开始，matlab-1
+    k = 1
     hacer = 1
     val = 1
     
@@ -115,7 +114,6 @@ def msvr(x, y, ker, C, epsi, par, tol):
             
             #stopping criterion 1
             if(eta < 1e-16):
-                #'stop 0';(matlab)
                 Lp[k] = Lp[k-1]- 1e-15
                 Beta = Beta_a.copy()
                 
@@ -136,7 +134,7 @@ def msvr(x, y, ker, C, epsi, par, tol):
             
         k = k + 1
         
-        #stopping criterion #3 - algorithm does not converge. (val = -1)
+        #stopping criterion #algorithm does not converge. (val = -1)
         if(len(i1) == 0):
             hacer = 0
             Beta = np.zeros(Beta.shape)
@@ -144,9 +142,7 @@ def msvr(x, y, ker, C, epsi, par, tol):
             
     NSV = len(i1)
     
-    #pred = np.dot(H,Beta)
-    
-    return Beta, NSV,H,i1
+    return Beta
 
 '''
 KERNELMATRIX
@@ -155,8 +151,8 @@ Builds a kernel from training and test data matrices.
 
 Inputs: 
     ker: {'lin' 'poly' 'rbf'}
-    X: trainX.T (n_d * n_m_train)
-    X2: testX.T (n_d * n_m_test)
+    X: Xtest (num_test * n_d)
+    X2: Xtrain (num_train * n_d)
     parameter: 
        width of the RBF kernel
        bias in the linear and polinomial kernel 
@@ -166,7 +162,7 @@ Output:
     K: kernel matrix
 '''
 
-def kernelmatrix(ker, X, X2, parameter):
+def kernelmatrix(ker, X, X2, p=0):
 
     X = X.T
     X2 = X2.T
@@ -174,12 +170,12 @@ def kernelmatrix(ker, X, X2, parameter):
     if(ker == 'lin'):
         tmp1, XX2_norm, tmp2 = np.linalg.svd(np.dot(X.T,X2))
         XX2_norm = np.max(XX2_norm)
-        K = np.dot(X.T,X2)/XX2_norm + parameter
+        K = np.dot(X.T,X2)/XX2_norm
     
     elif(ker == 'poly'):
         tmp1, XX2_norm, tmp2 = np.linalg.svd(np.dot(X.T,X2))
         XX2_norm = np.max(XX2_norm)
-        K = (np.dot(X.T,X2)/XX2_norm + 1) * parameter
+        K = (np.dot(X.T,X2)/XX2_norm*p[0] + p[1]) ** p[2]
     
     elif(ker == 'rbf'):
         n1sq = np.sum(X**2,0,keepdims=True)
@@ -196,7 +192,7 @@ def kernelmatrix(ker, X, X2, parameter):
             n2 = X2.shape[1]
             D = (np.dot(np.ones((n2,1)),n1sq)).T + np.dot(np.ones((n1,1)),n2sq) - 2*np.dot(X.T, X2)
         
-        K = np.exp((-D**2)/(2*parameter**2))
+        K = np.exp((-D**2)/(2*p**2))
         
     else:
         print("no such kernel")
