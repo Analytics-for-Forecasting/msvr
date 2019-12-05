@@ -34,7 +34,7 @@ Ytrain = (Ytrain-np.min(Ytrain))/(np.max(Ytrain)-np.min(Ytrain))
 # Parameters
 # ker: kernel ('lin', 'poly', 'rbf'),
 # C: cost parameter,
-# par: kernel parameter
+# par (kernel):
 #	- lin: no parameters,
 # - poly: [gamma, b, degree],
 # - rbf: sigma (width of the RBF kernel),
@@ -59,5 +59,5 @@ Ypred = np.dot(H, Beta)
 
 ## Kernel function
 
-![kernel function](https://github.com/KaishuaiXu/msvr/blob/master/kernel.png?raw=true){:height="50%" width="50%"}
+<img src="https://github.com/KaishuaiXu/msvr/blob/master/kernel.png?raw=true" alt="kernel function" align= left style="zoom:25%;" />
 
