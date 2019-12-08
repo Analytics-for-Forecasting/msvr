@@ -62,5 +62,5 @@ Ypred = np.dot(H, Beta)
 
 ## Kernel function
 
-<img src="https://github.com/KaishuaiXu/msvr/blob/master/kernel.png?raw=true" alt="kernel function" width="395" height="175" />
+<img src="https://github.com/KaishuaiXu/msvr/blob/master/pic/kernel.png?raw=true" alt="kernel function" width="395" height="175" />
 
