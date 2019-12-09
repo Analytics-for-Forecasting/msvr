@@ -50,7 +50,6 @@ def msvr(x, y, ker, C, epsi, par, tol):
     #Lp is the quantity to minimize (sq norm of parameters + slacks)    
     Lp = []
     BetaH = np.dot(np.dot(Beta.T, H), Beta)
-#     Lp_0 = np.sum(np.diag(BetaH).reshape(BetaH.shape[0],-1),0)/2 + C * np.sum(L)/2
     Lp_0 = np.sum(np.diag(BetaH), 0) / 2 + C * np.sum(L)/2
     Lp.append(Lp_0)
     
@@ -86,7 +85,6 @@ def msvr(x, y, ker, C, epsi, par, tol):
         
         #%recompute the loss function
         BetaH = np.dot(np.dot(Beta.T, H), Beta)
-#         Lp_k = np.sum(np.diag(BetaH).reshape(BetaH.shape[0],-1),0)/2 + C * np.sum(L,0)/2
         Lp_k = np.sum(np.diag(BetaH), 0) / 2 + C * np.sum(L)/2
         Lp.append(Lp_k)
         
@@ -108,7 +106,6 @@ def msvr(x, y, ker, C, epsi, par, tol):
             L = np.zeros(u.shape)
             L[i1] = u[i1]**2 - 2 * epsi * u[i1] + epsi**2
             BetaH = np.dot(np.dot(Beta.T, H), Beta)
-#             Lp_k = np.sum(np.diag(BetaH).reshape(BetaH.shape[0],-1),0)/2 + C * np.sum(L,0)/2
             Lp_k = np.sum(np.diag(BetaH), 0) / 2 + C * np.sum(L)/2
             Lp[k] = Lp_k
             
