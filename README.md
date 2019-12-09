@@ -40,11 +40,11 @@ Ytrain = (Ytrain-np.min(Ytrain))/(np.max(Ytrain)-np.min(Ytrain))
 #	  -rbf: sigma (width of the RBF kernel),
 #  tol: tolerance.
 
-ker     = 'rbf'
-C       = 2
+ker  = 'rbf'
+C    = 2
 epsi = 0.001
-par   = 0.8 # if kernel is 'rbf', par means sigma
-tol     = 1e-10
+par  = 0.8 # if kernel is 'rbf', par means sigma
+tol  = 1e-10
 
 # Train
 Beta = msvr(Xtrain, Ytrain, ker, C, epsi, sigma, tol)
