@@ -47,14 +47,14 @@ par  = 0.8 # if kernel is 'rbf', par means sigma
 tol  = 1e-10
 
 # Train
-Beta = msvr(Xtrain, Ytrain, ker, C, epsi, sigma, tol)
+Beta = msvr(Xtrain, Ytrain, ker, C, epsi, par, tol)
 
 # Predict with train set
-H = kernelmatrix('rbf', Xtrain, Xtrain, sigma);
+H = kernelmatrix('rbf', Xtrain, Xtrain, par);
 Ypred = np.dot(H, Beta)
 
 # Predict with test set
-H = kernelmatrix('rbf', Xtest, Xtrain, sigma);
+H = kernelmatrix('rbf', Xtest, Xtrain, par);
 Ypred = np.dot(H, Beta)
 ```
 
