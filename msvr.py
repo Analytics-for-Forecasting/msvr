@@ -67,8 +67,8 @@ def msvr(x, y, ker, C, epsi, par, tol):
         M1 = H[i1][:,i1] + np.diagflat(1/a[i1]) + 1e-10 * np.eye(len(a[i1]))
         
         #compute betas
-#         sal1 = np.dot(np.linalg.pinv(M1),y[i1])  #求逆or广义逆（M-P逆）无法保证M1一定是可逆的？
-        sal1 = np.dot(np.linalg.inv(M1),y[i1])
+        sal1 = np.dot(np.linalg.pinv(M1),y[i1])  #求逆or广义逆（M-P逆）无法保证M1一定是可逆的？
+#         sal1 = np.dot(np.linalg.inv(M1),y[i1])
         
         eta = 1
         Beta = np.zeros(Beta.shape)
