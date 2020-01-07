@@ -2,63 +2,64 @@
 
 Multiple support vector regression is a method which implements support vector regression with multi-input and multi-output. This package is based on the paper, [Multi-dimensional function approximation and regression estimation](https://link.springer.com/chapter/10.1007/3-540-46084-5_123), [F Pérez-Cruz](https://scholar.google.com/citations?user=8FfrHw0AAAAJ&hl=en&oi=sra).
 
+## Requirement
+numpy
+sklearn
+
 ## Usage
 
 ```python
-from msvr import kernelmatrix
-from msvr import msvr
+from model.MSVR import MSVR
+from model.utility import create_dataset, rmse
 import numpy as np
 
 # Construct x samples (input) and y samples (output)
-# x: num_samples * dimension
-# y: num_smaples * dimension
-x1 = np.sin(np.arange(0, 9, 0.01))
-x2 = np.cos(np.arange(0, 9, 0.01))
-x3 = x1**2
-x4 = (x1+x2)/2
+# x: num_samples * inputDim
+# y: num_smaples * outputH
+ts = np.sin(np.arange(0, 9, 0.01)).reshape(-1)
 
-x = np.vstack((x1,x2)).T
-y = np.vstack((x3,x4)).T
+segmentation = int(len(ts)*2/3)
+dim = 50
+h = 5
 
-# Input & Output
-# Xtrain: number of samples * input dimension
-# Ytrain: number of samples * output dimension
+dataset = create_dataset(ts, dim, h)
+X, Y = dataset[:, :(0 - h)], dataset[:, (0-h):]
+train_input = X[:segmentation, :]
+train_target = Y[:segmentation].reshape(-1, h)
+test_input = X[segmentation:, :]
+test_target = Y[segmentation:].reshape(-1, h)
 
-Xtrain = x[:600, :]
-Ytrain = y[:600, :]
-Xtest = x[600:, :]
-Ytest = y[600:, :]
-Xtrain = (Xtrain-np.min(Xtrain))/(np.max(Xtrain)-np.min(Xtrain))
-Ytrain = (Ytrain-np.min(Ytrain))/(np.max(Ytrain)-np.min(Ytrain))
-
-# Parameters
-#  ker: kernel ('lin', 'poly', 'rbf'),
-#  C: cost parameter,
-#  par (kernel):
-#	  -lin: no parameters,
-#	  -poly: [gamma, b, degree],
-#	  -rbf: sigma (width of the RBF kernel),
-#  tol: tolerance.
-
-ker  = 'rbf'
-C    = 2
-epsi = 0.001
-par  = 0.8 # if kernel is 'rbf', par means sigma
-tol  = 1e-10
-
+msvr = MSVR(kernel = 'rbf', gamma = 0.1, epsilon=0.001)
 # Train
-Beta = msvr(Xtrain, Ytrain, ker, C, epsi, par, tol)
+msvr.fit(train_input, train_target)
 
 # Predict with train set
-H = kernelmatrix('rbf', Xtrain, Xtrain, par);
-Ypred = np.dot(H, Beta)
-
+trainPred = msvr.predict(train_input)
 # Predict with test set
-H = kernelmatrix('rbf', Xtest, Xtrain, par);
-Ypred = np.dot(H, Beta)
+testPred = msvr.predict(test_input)
+
+trainMetric = rmse(train_target,trainPred)
+testMetric = rmse(test_target,testPred)
+
+print(trainMetric, testMetric)
 ```
 
-## Kernel function
+## Kernels
 
-<img src="https://github.com/KaishuaiXu/msvr/blob/master/pic/kernel.png?raw=true" alt="kernel function" width="395" height="175" />
+This module implements [sklearn.metrics.pairwise.pairwise_kernels](https://scikit-learn.org/stable/modules/metrics.html#metrics) to support multiple kernels. A brief example is given there:
+```
+msvr = MSVR(kernel = 'rbf', gamma = 0.1)
+```
+The valid metric for kernels, and the kernel functions the map to, are:
+| Metric | Function |
+| :- | :-|
+| 'additive_chi2' | sklearn.pairwise.additive_chi2_kernel  |
+| 'chi2'          | sklearn.pairwise.chi2_kernel           |
+| 'linear'        | sklearn.pairwise.linear_kernel         |
+| 'poly'          | sklearn.pairwise.polynomial_kernel     |
+| 'polynomial'    | sklearn.pairwise.polynomial_kernel     |
+| 'rbf'           | sklearn.pairwise.rbf_kernel            |
+| 'laplacian'     | sklearn.pairwise.laplacian_kernel      |
+| 'sigmoid'       | sklearn.pairwise.sigmoid_kernel        |
+| 'cosine'        | sklearn.pairwise.cosine_similarity     |
 

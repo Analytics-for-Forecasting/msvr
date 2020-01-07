@@ -1,6 +1,22 @@
+"""
+Multi-output Support Vector Regression
+"""
+# Copyright (C) 2020 Xinze Zhang, Kaishuai Xu, Siyue Yang
+# <xinze@hust.edu.cn>, <xu.kaishuai@gmail.com>, <siyue_yang@hust.edu.cn>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+
 import numpy as np
 from sklearn.metrics.pairwise import pairwise_kernels
-
 
 class MSVR():
     def __init__(self, kernel='rbf', degree=3, gamma=None, coef0=0.0, tol=0.001, C=1.0, epsilon=0.1):
