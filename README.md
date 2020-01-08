@@ -68,16 +68,17 @@ The valid metric for kernels, and the kernel functions the map to, are:
 
 ## License
 
-Follow the license of Apache, and please cite our paper when using this module.
+This program is free software: you can redistribute it and/or modify it under the terms of the Apache.
 
-```
-@article{bao2014multi,
-  title={Multi-step-ahead time series prediction using multiple-output support vector regression},
-  author={Bao, Yukun and Xiong, Tao and Hu, Zhongyi},
-  journal={Neurocomputing},
-  volume={129},
-  pages={482--493},
-  year={2014},
-  publisher={Elsevier}
-}
-```
+## References
+
+Please refer to the below papers for probably citation.
+
+Bao, Y., Xiong, T., & Hu, Z. (2014). Multi-step-ahead time series prediction using multiple-output support vector regression. Neurocomputing, 129, 482-493.
+
+Xiong, T., Li, C., Bao, Y., Hu, Z., & Zhang, L. (2015). A combination method for interval forecasting of agricultural commodity futures prices. Knowledge-Based Systems, 77, 92-102.
+
+Hu, Z., Bao, Y., Chiong, R., & Xiong, T. (2015). Mid-term interval load forecasting using multi-output support vector regression with a memetic algorithm for feature selection. Energy, 84, 419-431.
+
+
+
