@@ -1,6 +1,6 @@
-# Multiple Support Vector Regression
+# Multiple-output Support Vector Regression
 
-Multiple support vector regression is a method which implements support vector regression with multi-input and multi-output. This package is based on our paper [Multi-step-ahead time series prediction using multiple-output support vector regression](https://www.sciencedirect.com/science/article/abs/pii/S092523121300917X).
+Multiple-output support vector regression is a method which implements support vector regression with multi-input and multi-output. This package is based on our paper [Multi-step-ahead time series prediction using multiple-output support vector regression](https://www.sciencedirect.com/science/article/abs/pii/S092523121300917X).
 
 ## Requirement
 ```
