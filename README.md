@@ -64,8 +64,3 @@ The valid metric for kernels, and the kernel functions the map to, are:
 | 'sigmoid'       | sklearn.pairwise.sigmoid_kernel        |
 | 'cosine'        | sklearn.pairwise.cosine_similarity     |
 
-| Command | Description |
-| --- | --- |
-| git status | List all new or modified files |
-| git diff | Show file differences that haven't been staged |
-
