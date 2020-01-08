@@ -52,7 +52,7 @@ msvr = MSVR(kernel = 'rbf', gamma = 0.1)
 ```
 The valid metric for kernels, and the kernel functions the map to, are:
 | Metric | Function |
-| :- | :-|
+| --- | --- |
 | 'additive_chi2' | sklearn.pairwise.additive_chi2_kernel  |
 | 'chi2'          | sklearn.pairwise.chi2_kernel           |
 | 'linear'        | sklearn.pairwise.linear_kernel         |
