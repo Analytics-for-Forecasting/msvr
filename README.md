@@ -51,6 +51,7 @@ This module implements [sklearn.metrics.pairwise.pairwise_kernels](https://sciki
 msvr = MSVR(kernel = 'rbf', gamma = 0.1)
 ```
 The valid metric for kernels, and the kernel functions the map to, are:
+
 | Metric | Function |
 | --- | --- |
 | 'additive_chi2' | sklearn.pairwise.additive_chi2_kernel  |
@@ -62,4 +63,9 @@ The valid metric for kernels, and the kernel functions the map to, are:
 | 'laplacian'     | sklearn.pairwise.laplacian_kernel      |
 | 'sigmoid'       | sklearn.pairwise.sigmoid_kernel        |
 | 'cosine'        | sklearn.pairwise.cosine_similarity     |
+
+| Command | Description |
+| --- | --- |
+| git status | List all new or modified files |
+| git diff | Show file differences that haven't been staged |
 
