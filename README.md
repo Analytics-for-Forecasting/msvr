@@ -3,8 +3,10 @@
 Multiple support vector regression is a method which implements support vector regression with multi-input and multi-output. This package is based on the paper, [Multi-dimensional function approximation and regression estimation](https://link.springer.com/chapter/10.1007/3-540-46084-5_123), [F Pérez-Cruz](https://scholar.google.com/citations?user=8FfrHw0AAAAJ&hl=en&oi=sra).
 
 ## Requirement
+```
 numpy
 sklearn
+```
 
 ## Usage
 
@@ -64,3 +66,18 @@ The valid metric for kernels, and the kernel functions the map to, are:
 | 'sigmoid'       | sklearn.pairwise.sigmoid_kernel        |
 | 'cosine'        | sklearn.pairwise.cosine_similarity     |
 
+## License
+
+Follow the license of Apache, and please cite our paper when using this module.
+
+```
+@article{bao2014multi,
+  title={Multi-step-ahead time series prediction using multiple-output support vector regression},
+  author={Bao, Yukun and Xiong, Tao and Hu, Zhongyi},
+  journal={Neurocomputing},
+  volume={129},
+  pages={482--493},
+  year={2014},
+  publisher={Elsevier}
+}
+```
